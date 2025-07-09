@@ -329,7 +329,7 @@ export default function JobsScholarships() {
           <Card className="bg-gradient-to-r from-green-600 to-green-700 text-white">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4">
-                Don't See What You're Looking For?
+                Don&apos;t See What You&apos;re Looking For?
               </h2>
               <p className="text-green-100 mb-6 max-w-2xl mx-auto">
                 Stay connected with our community and be the first to know about new opportunities. 

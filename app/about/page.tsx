@@ -111,7 +111,7 @@ export default function About() {
             About NYSC Toru-Orua
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Learn about our community, leadership, and the impact we're making in Sagbama Local Government Area
+            Learn about our community, leadership, and the impact we&apos;re making in Sagbama Local Government Area
           </p>
         </motion.div>
 

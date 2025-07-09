@@ -680,7 +680,7 @@ const registerAsCandidate = async () => {
                                             <h4 className="font-semibold">{candidate.profile?.full_name}</h4>
                                             <p className="text-sm text-gray-600">{candidate.profile?.state_code}</p>
                                             {candidate.campaign_slogan && (
-                                              <p className="text-xs text-blue-600 italic">"{candidate.campaign_slogan}"</p>
+                                              <p className="text-xs text-blue-600 italic">&quot;{candidate.campaign_slogan}&quot;</p>
                                             )}
                                           </div>
                                         </div>
