@@ -34,7 +34,7 @@ export default function Suggestions() {
   const [userReactions, setUserReactions] = useState<SuggestionReaction[]>([])
   const [newSuggestion, setNewSuggestion] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('general')
-  const [isAnonymous, setIsAnonymous] = useState(true)
+  const [isAnonymous, setIsAnonymous] = useState<boolean | 'indeterminate'>(true)
   const [showForm, setShowForm] = useState(false)
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [loadingSuggestions, setLoadingSuggestions] = useState(true)
