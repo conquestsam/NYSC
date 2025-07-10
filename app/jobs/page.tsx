@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { supabase, JobScholarship } from '@/lib/supabase'
 import { format, isAfter, parseISO } from 'date-fns'
+import { toast } from 'sonner'
 
 export default function JobsScholarships() {
   const [jobs, setJobs] = useState<JobScholarship[]>([])
