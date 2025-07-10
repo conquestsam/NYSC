@@ -68,7 +68,7 @@ export interface Activity {
   description?: string
   image_url?: string
   images?: string[]
-  activity_date?: string
+  activity_date?: string | undefined
   category: string
   status: string
   is_active: boolean
