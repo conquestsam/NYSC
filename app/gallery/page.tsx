@@ -63,7 +63,7 @@ export default function Gallery() {
       setPhotos(data || [])
       
       // Extract unique tags
-      const uniqueTags = [...new Set<string[]>(data?.map(photo => photo.event_tag) || [])]
+      const uniqueTags = [...new Set<string>(data?.map(photo => photo.event_tag) || [])]
       setTags(uniqueTags)
     } catch (error) {
       console.error('Error fetching photos:', error)
