@@ -192,7 +192,7 @@ export default function OtherActivities() {
                         >
                           <Calendar className="h-5 w-5 mr-2" />
                           {/* <span>{`${activities[currentSlide]?.activity_date}`}</span> */}
-                          <span>{format((new Date(activities[currentSlide]?.activity_date).getFullYear(), new Date(activities[currentSlide]?.activity_date).getMonth(), new Date(activities[currentSlide]?.activity_date).getDay()), 'MMM, DD YYYY')}</span>
+                          <span>{activities[currentSlide]?.activity_date ? format((new Date(activities[currentSlide]?.activity_date).getFullYear(), new Date(activities[currentSlide]?.activity_date).getMonth(), new Date(activities[currentSlide]?.activity_date).getDay()), 'MMM, DD YYYY') : "Not Provided"}</span>
                           {/* <span>{format(activities[currentSlide]?.activity_date, 'MMMM dd, yyyy')}</span> */}
                         </motion.div>
                       )}
@@ -310,7 +310,7 @@ export default function OtherActivities() {
                         
                         <div className="flex items-center text-sm text-gray-500">
                           <Clock className="h-4 w-4 mr-2" />
-                          <span>Added: {format(new Date(activity.created_at), 'MMM dd, yyyy')}</span>
+                          <span>Added: {activity.created_at ? format(new Date(activity.created_at), 'MMM dd, yyyy') : 'not provided'}</span>
                         </div>
                       </div>
                     </CardContent>
