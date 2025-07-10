@@ -191,7 +191,8 @@ export default function OtherActivities() {
                           className="flex items-center justify-center text-lg text-gray-200"
                         >
                           <Calendar className="h-5 w-5 mr-2" />
-                          <span>{`${activities[currentSlide]?.activity_date}`}</span>
+                          {/* <span>{`${activities[currentSlide]?.activity_date}`}</span> */}
+                          <span>{format((new Date(activities[currentSlide]?.activity_date).getFullYear(), new Date(activities[currentSlide]?.activity_date).getMonth(), new Date(activities[currentSlide]?.activity_date).getDay()), 'MMM, DD YYYY')}</span>
                           {/* <span>{format(activities[currentSlide]?.activity_date, 'MMMM dd, yyyy')}</span> */}
                         </motion.div>
                       )}
@@ -303,7 +304,7 @@ export default function OtherActivities() {
                         {activity.activity_date && (
                           <div className="flex items-center text-sm text-gray-500">
                             <Calendar className="h-4 w-4 mr-2" />
-                            <span>{format(new Date(activity.activity_date), 'MMM dd, yyyy')}</span>
+                            <span>{format((new Date(activity.activity_date).getFullYear(), new Date(activity.activity_date).getMonth(), new Date(activity.activity_date).getDay()), 'MMM, DD YYYY')}</span>
                           </div>
                         )}
                         
