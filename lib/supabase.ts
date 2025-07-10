@@ -28,7 +28,6 @@ export interface Profile {
   ppa?: string
   department?: string
   bio?: string
-  role: 'voter' | 'candidate' | 'executive' | 'super_admin'
   role: 'voter' | 'candidate' | 'executive' | 'electoral_committee' | 'super_admin'
   is_graduated: boolean
   is_verified: boolean
@@ -68,7 +67,7 @@ export interface Activity {
   description?: string
   image_url?: string
   images?: string[]
-  activity_date?: string | number | Date | undefined
+  activity_date?: string 
   category: string
   status: string
   is_active: boolean
