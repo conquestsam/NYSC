@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import dayjs from 'dayjs';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -16,7 +17,7 @@ import {
   Award
 } from 'lucide-react'
 import { supabase, Activity } from '@/lib/supabase'
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
 
 export default function OtherActivities() {
   const [activities, setActivities] = useState<Activity[]>([])
@@ -191,9 +192,7 @@ export default function OtherActivities() {
                           className="flex items-center justify-center text-lg text-gray-200"
                         >
                           <Calendar className="h-5 w-5 mr-2" />
-                          {/* <span>{`${activities[currentSlide]?.activity_date}`}</span> */}
-                          <span>{activities[currentSlide]?.activity_date ? format((new Date(activities[currentSlide]?.activity_date).getFullYear(), new Date(activities[currentSlide]?.activity_date).getMonth(), new Date(activities[currentSlide]?.activity_date).getDay()), 'MMM, DD YYYY') : "Not Provided"}</span>
-                          {/* <span>{format(activities[currentSlide]?.activity_date, 'MMMM dd, yyyy')}</span> */}
+                          <span>{dayjs(activities[currentSlide]?.activity_date ).format('MMM, DD YYYY').toUpperCase()}</span>
                         </motion.div>
                       )}
                     </div>
@@ -304,13 +303,13 @@ export default function OtherActivities() {
                         {activity.activity_date && (
                           <div className="flex items-center text-sm text-gray-500">
                             <Calendar className="h-4 w-4 mr-2" />
-                            <span>{format((new Date(activity.activity_date).getFullYear(), new Date(activity.activity_date).getMonth(), new Date(activity.activity_date).getDay()), 'MMM, DD YYYY')}</span>
+                            <span>{dayjs(activity?.activity_date ).format('MMM, DD YYYY')}</span>
                           </div>
                         )}
                         
                         <div className="flex items-center text-sm text-gray-500">
                           <Clock className="h-4 w-4 mr-2" />
-                          <span>Added: {activity.created_at ? format(new Date(activity.created_at), 'MMM dd, yyyy') : 'not provided'}</span>
+                          <span>Added: {activity.created_at ? dayjs(activity.created_at).format('MMM, DD YYYY') : 'not provided'}</span>
                         </div>
                       </div>
                     </CardContent>
