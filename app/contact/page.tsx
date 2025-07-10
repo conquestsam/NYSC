@@ -123,7 +123,7 @@ export default function Contact() {
             Contact Us
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Get in touch with us. We're here to help and answer any questions you might have.
+            Get in touch with us. We&apos;re here to help and answer any questions you might have.
           </p>
         </motion.div>
 
@@ -204,7 +204,7 @@ export default function Contact() {
                   Send us a Message
                 </CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you as soon as possible.
+                  Fill out the form below and we&apos;ll get back to you as soon as possible.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -212,7 +212,7 @@ export default function Contact() {
                   <Alert className="mb-6 border-green-200 bg-green-50">
                     <Send className="h-4 w-4 text-green-600" />
                     <AlertDescription className="text-green-700">
-                      Thank you for your message! We'll get back to you soon.
+                      Thank you for your message! We&apos;ll get back to you soon.
                     </AlertDescription>
                   </Alert>
                 )}
