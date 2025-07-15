@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar, MapPin, GraduationCap, Building, Phone, Mail, Edit, Vote, MessageSquare, Camera } from 'lucide-react'
 import Link from 'next/link'
+import { ToruOruaAssistant } from '@/components/ToruOruaAssistant'
+
 
 export default function Dashboard() {
   const { user, profile, loading } = useAuth()
@@ -173,6 +175,11 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+     {/* Toru-Orua Assistant */}
+      <ToruOruaAssistant 
+        isAuthenticated={!!user}
+        userName={profile.full_name || "NYSC Member"}
+      />
     </div>
   )
 }

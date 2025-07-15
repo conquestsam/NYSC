@@ -879,7 +879,7 @@ const registerAsCandidate = async () => {
                   value={voterRegData.address}
                   onChange={(e) => setVoterRegData({ ...voterRegData, address: e.target.value })}
                 />
-              </div>
+              </div> 
               
               <div className="space-y-2">
                 <Label htmlFor="identity_document_url">Identity Document (Upload URL)</Label>

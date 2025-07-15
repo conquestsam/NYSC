@@ -36,7 +36,9 @@ import {
   UserCheck, 
   UserX,
   ArrowLeft,
-  MoreHorizontal
+  MoreHorizontal,
+  Shield,
+  Crown
 } from 'lucide-react'
 import Link from 'next/link'
 import { supabase, Profile } from '@/lib/supabase'
@@ -125,10 +127,25 @@ export default function UserManagement() {
 
       if (error) throw error
       
+      // If upgrading to electoral committee, create electoral committee record
+      if (newRole === 'electoral_committee') {
+        const { error: committeeError } = await supabase
+          .from('electoral_committee')
+          .insert([{
+            user_id: userId,
+            position: 'member',
+            appointed_by: profile?.id
+          }])
+
+        if (committeeError && !committeeError.message.includes('duplicate')) {
+          console.error('Error creating electoral committee record:', committeeError)
+        }
+      }
+      
       setUsers(users.map(user => 
         user.id === userId ? { ...user, role: newRole as any } : user
       ))
-      toast.success('User role updated successfully')
+      toast.success(`User role updated to ${newRole.replace('_', ' ')} successfully`)
     } catch (error) {
       console.error('Error updating user role:', error)
       toast.error('Failed to update user role')
@@ -188,9 +205,18 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'super_admin': return 'bg-red-100 text-red-800'
-      case 'executive': return 'bg-purple-100 text-purple-800'
-      case 'candidate': return 'bg-blue-100 text-blue-800'
+      case 'electoral_committee': return 'bg-purple-100 text-purple-800'
+      case 'executive': return 'bg-blue-100 text-blue-800'
+      case 'candidate': return 'bg-orange-100 text-orange-800'
       default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getRoleIcon = (role: string) => {
+    switch (role) {
+      case 'super_admin': return <Crown className="h-3 w-3 mr-1" />
+      case 'electoral_committee': return <Shield className="h-3 w-3 mr-1" />
+      default: return null
     }
   }
 
@@ -232,6 +258,7 @@ export default function UserManagement() {
                   <SelectItem value="voter">Voter</SelectItem>
                   <SelectItem value="candidate">Candidate</SelectItem>
                   <SelectItem value="executive">Executive</SelectItem>
+                  <SelectItem value="electoral_committee">Electoral Committee</SelectItem>
                   <SelectItem value="super_admin">Super Admin</SelectItem>
                 </SelectContent>
               </Select>
@@ -287,6 +314,9 @@ export default function UserManagement() {
                           <div>
                             <p className="font-medium">{user.full_name}</p>
                             <p className="text-sm text-gray-500">{user.state_code}</p>
+                            {user.voter_id && (
+                              <p className="text-xs text-blue-600">ID: {user.voter_id}</p>
+                            )}
                           </div>
                         </div>
                       </TableCell>
@@ -304,6 +334,7 @@ export default function UserManagement() {
                       </TableCell>
                       <TableCell>
                         <Badge className={getRoleBadgeColor(user.role)}>
+                          {getRoleIcon(user.role)}
                           {user.role.replace('_', ' ')}
                         </Badge>
                       </TableCell>
@@ -314,6 +345,9 @@ export default function UserManagement() {
                           </Badge>
                           {user.is_graduated && (
                             <Badge variant="outline">Graduated</Badge>
+                          )}
+                          {user.identity_verified && (
+                            <Badge className="bg-green-100 text-green-800">ID Verified</Badge>
                           )}
                         </div>
                       </TableCell>
@@ -339,7 +373,7 @@ export default function UserManagement() {
                             value={user.role}
                             onValueChange={(value) => updateUserRole(user.id, value)}
                           >
-                            <SelectTrigger className="w-32">
+                            <SelectTrigger className="w-40">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
