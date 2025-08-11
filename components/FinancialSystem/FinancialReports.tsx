@@ -249,9 +249,17 @@ export default function FinancialReports() {
   const downloadReport = async (reportId: string) => {
     try {
       // Increment download count
+      const { data: currentReport, error: fetchError } = await supabase
+        .from('financial_reports')
+        .select('download_count')
+        .eq('id', reportId)
+        .single()
+
+      if (fetchError) throw fetchError
+
       const { error } = await supabase
         .from('financial_reports')
-        .update({ download_count: supabase.sql`download_count + 1` })
+        .update({ download_count: (currentReport?.download_count || 0) + 1 })
         .eq('id', reportId)
 
       if (error) throw error
@@ -262,7 +270,7 @@ export default function FinancialReports() {
       console.error('Error downloading report:', error)
       toast.error('Failed to download report')
     }
-  }
+}
 
   const resetReportForm = () => {
     setReportForm({
