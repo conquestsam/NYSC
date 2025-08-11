@@ -67,7 +67,7 @@ export interface Activity {
   description?: string
   image_url?: string
   images?: string[]
-  activity_date?: string 
+  activity_date?: string
   category: string
   status: string
   is_active: boolean
@@ -232,6 +232,70 @@ export interface ElectionResult {
   compiled_by?: string
   compiled_at: string
   is_final: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface FinancialCategory {
+  id: string
+  name: string
+  type: 'revenue' | 'expenditure'
+  description?: string
+  is_active: boolean
+  created_by?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface FinancialTransaction {
+  id: string
+  category_id: string
+  title: string
+  description?: string
+  amount: number
+  transaction_date: string
+  reference_number?: string
+  receipt_url?: string
+  created_by?: string
+  approved_by?: string
+  approval_status: 'pending' | 'approved' | 'rejected'
+  approval_date?: string
+  rejection_reason?: string
+  is_active: boolean
+  created_at: string
+  updated_at: string
+  category?: FinancialCategory
+}
+
+export interface FinancialSummary {
+  id: string
+  period_type: 'monthly' | 'quarterly' | 'yearly'
+  period_start: string
+  period_end: string
+  total_revenue: number
+  total_expenditure: number
+  net_balance: number
+  transaction_count: number
+  summary_data: Record<string, any>
+  compiled_by?: string
+  compiled_at: string
+  is_final: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface FinancialReport {
+  id: string
+  report_type: 'statement' | 'summary' | 'detailed' | 'audit'
+  title: string
+  description?: string
+  period_start: string
+  period_end: string
+  file_url?: string
+  file_size?: number
+  generated_by?: string
+  download_count: number
+  is_public: boolean
   created_at: string
   updated_at: string
 }

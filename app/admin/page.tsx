@@ -15,14 +15,14 @@ import {
   Info, 
   Camera, 
   Vote,
+  Bell,
+  DollarSign,
   Settings,
   Upload,
   Edit,
   Trash2,
   Eye,
-  Plus,
-  Bell,
-  Users2Icon
+  Plus
 } from 'lucide-react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -98,7 +98,7 @@ export default function AdminPanel() {
     {
       title: 'User Management',
       description: 'Manage users, roles, and verification',
-      icon: Users2Icon,
+      icon: Users,
       href: '/admin/users',
       color: 'bg-blue-500'
     },
@@ -152,6 +152,13 @@ export default function AdminPanel() {
       color: 'bg-indigo-500'
     },
     {
+      title: 'Financial Management',
+      description: 'Manage revenue, expenditure, and financial reports',
+      icon: DollarSign,
+      href: '/admin/finance',
+      color: 'bg-emerald-500'
+    },
+    {
       title: 'Settings',
       description: 'System settings and configuration',
       icon: Settings,
@@ -179,7 +186,7 @@ export default function AdminPanel() {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
-          {statsCards?.map((stat, index) => (
+          {statsCards.map((stat, index) => (
             <Card key={index}>
               <CardContent className="p-6">
                 <div className="flex items-center">

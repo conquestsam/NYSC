@@ -99,8 +99,15 @@ export default function Navbar() {
                         Gallery
                       </NavigationMenuLink>
                     </Link>
-                  </NavigationMenuItem>
-                )}
+
+                      <Link href="/finance" legacyBehavior passHref>
+                        <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors text-white hover:text-green-100 hover:bg-green-700 focus:bg-green-700 focus:text-green-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                          Finance
+                        </NavigationMenuLink>
+                      </Link>
+                      </NavigationMenuItem>
+                      )}
+                    
                 <NavigationMenuItem>
                   <Link href="/contact" legacyBehavior passHref>
                     <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors text-white hover:text-green-100 hover:bg-green-700 focus:bg-green-700 focus:text-green-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
@@ -222,6 +229,11 @@ export default function Navbar() {
               <Link href="/donation" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
                 Donation
               </Link>
+              {user && (
+                <Link href="/finance" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+                  Finance
+                </Link>
+              )}
               
               {user ? (
                 <div className="border-t border-green-700 pt-4">
