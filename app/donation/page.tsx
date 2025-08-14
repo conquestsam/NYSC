@@ -36,24 +36,13 @@ export default function Donation() {
 
   const predefinedAmounts = ['5000', '10000', '25000', '50000', '100000']
 
+  // Only one bank account now
   const bankAccounts = [
     {
-      bank: 'First Bank Nigeria',
-      accountName: 'NYSC Toru-Orua Community Fund',
-      accountNumber: '2034567890',
-      sortCode: '011'
-    },
-    {
-      bank: 'Zenith Bank',
-      accountName: 'NYSC Toru-Orua Development Fund',
-      accountNumber: '1234567890',
-      sortCode: '057'
-    },
-    {
-      bank: 'GTBank',
-      accountName: 'NYSC Toru-Orua Welfare Fund',
-      accountNumber: '0123456789',
-      sortCode: '058'
+      bank: 'Opay',
+      accountName: 'Adeniyi Adeyemi Samuel',
+      accountNumber: '6141696221',
+      sortCode: ''
     }
   ]
 
@@ -202,7 +191,7 @@ export default function Donation() {
                     Bank Account Details
                   </CardTitle>
                   <CardDescription>
-                    Transfer your donation to any of these accounts
+                    Transfer your donation to the account below
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -213,9 +202,8 @@ export default function Donation() {
                           <h3 className="font-semibold text-gray-900">{account.bank}</h3>
                           <p className="text-sm text-gray-600">{account.accountName}</p>
                         </div>
-                        <Badge variant="outline">{account.sortCode}</Badge>
+                        {/* No sort code for Opay */}
                       </div>
-                      
                       <div className="flex items-center justify-between bg-white rounded p-3 border">
                         <div>
                           <p className="text-sm text-gray-600">Account Number</p>
@@ -235,11 +223,10 @@ export default function Donation() {
                       </div>
                     </div>
                   ))}
-                  
                   <Alert>
                     <Banknote className="h-4 w-4" />
                     <AlertDescription>
-                      Please use your full name as the transfer reference and notify us via the contact form below after making your donation.
+                      Please use your full name as the transfer reference and notify us via the form below after making your donation.
                     </AlertDescription>
                   </Alert>
                 </CardContent>
@@ -263,58 +250,62 @@ export default function Donation() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <form
+                    action="https://formspree.io/f/mldlvnla"
+                    method="POST"
+                    className="space-y-4"
+                    target="_blank"
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Full Name</Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          placeholder="Enter your full name"
+                          value={donorInfo.name}
+                          onChange={handleDonorInfoChange}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email Address</Label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          placeholder="Enter your email"
+                          value={donorInfo.email}
+                          onChange={handleDonorInfoChange}
+                        />
+                      </div>
+                    </div>
                     <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
+                      <Label htmlFor="phone">Phone Number</Label>
                       <Input
-                        id="name"
-                        name="name"
-                        placeholder="Enter your full name"
-                        value={donorInfo.name}
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="Enter your phone number"
+                        value={donorInfo.phone}
                         onChange={handleDonorInfoChange}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={donorInfo.email}
+                      <Label htmlFor="message">Message (Optional)</Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        placeholder="Leave a message or specify how you'd like your donation to be used..."
+                        value={donorInfo.message}
                         onChange={handleDonorInfoChange}
+                        className="min-h-[100px]"
                       />
                     </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="Enter your phone number"
-                      value={donorInfo.phone}
-                      onChange={handleDonorInfoChange}
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message (Optional)</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Leave a message or specify how you'd like your donation to be used..."
-                      value={donorInfo.message}
-                      onChange={handleDonorInfoChange}
-                      className="min-h-[100px]"
-                    />
-                  </div>
-                  
-                  <Button className="w-full bg-green-600 hover:bg-green-700">
-                    <Phone className="h-4 w-4 mr-2" />
-                    Notify Us of Donation
-                  </Button>
+                    <Button className="w-full bg-green-600 hover:bg-green-700" type="submit">
+                      <Phone className="h-4 w-4 mr-2" />
+                      Notify Us of Donation
+                    </Button>
+                  </form>
                 </CardContent>
               </Card>
             </motion.div>
@@ -415,7 +406,7 @@ export default function Donation() {
                 <CardContent className="space-y-3">
                   <div className="flex items-center space-x-3">
                     <Phone className="h-4 w-4 text-green-600" />
-                    <span className="text-sm">+234 803 123 4567</span>
+                    <span className="text-sm">08061410856, Financial Secretary</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Mail className="h-4 w-4 text-green-600" />

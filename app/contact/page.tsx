@@ -199,7 +199,7 @@ export default function Contact() {
 
                 {/* Use Formspree for sending email */}
                 <form
-                  action="https://formspree.io/f/mldlvnla" // Replace with your Formspree form ID for conqueststat@gmail.com
+                  action="https://formspree.io/f/xnnzrvgp" // Replace with your Formspree form ID for conqueststat@gmail.com
                   method="POST"
                   className="space-y-6"
                   onSubmit={() => setSuccess(true)}
