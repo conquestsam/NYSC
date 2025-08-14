@@ -1,0 +1,42 @@
+NEXT_PUBLIC_SUPABASE_URL=https://ijspmapsslaorufibuua.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlqc3BtYXBzc2xhb3J1ZmlidXVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MTIyNzIsImV4cCI6MjA2NzM4ODI3Mn0.zZwgpLnUCYot_saoKoT-po9w8eyMsbG4B9rbv8LvyY4
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+
+# Super Admin Credentials
+SUPER_ADMIN_EMAIL=admin@toru-orua.com
+SUPER_ADMIN_PASSWORD=SuperAdmin@2024
+
+# Application Settings
+NEXT_PUBLIC_APP_NAME=NYSC Toru-Orua Portal
+NEXT_PUBLIC_APP_DESCRIPTION=Official portal for NYSC Toru-Orua corps members
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Email Configuration (for notifications)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+
+# File Upload Settings
+MAX_FILE_SIZE=10485760
+ALLOWED_FILE_TYPES=image/jpeg,image/png,image/webp,application/pdf
+
+# Security Settings
+JWT_SECRET=your_jwt_secret_here
+ENCRYPTION_KEY=your_encryption_key_here
+
+# Database Settings
+DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@db.ijspmapsslaorufibuua.supabase.co:5432/postgres
+
+# Financial System Settings
+CURRENCY_SYMBOL=₦
+CURRENCY_CODE=NGN
+FINANCIAL_YEAR_START=01-01
+FINANCIAL_YEAR_END=12-31
+
+# Report Settings
+REPORT_LOGO_URL=https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg
+ORGANIZATION_NAME=NYSC Toru-Orua
+ORGANIZATION_ADDRESS=Sagbama Local Government Area, Bayelsa State, Nigeria
+ORGANIZATION_PHONE=+234 803 123 4567
+ORGANIZATION_EMAIL=info@toru-orua.com
