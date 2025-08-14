@@ -29,34 +29,14 @@ export default function Contact() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setSuccess(true)
-      setLoading(false)
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      
-      // Hide success message after 5 seconds
-      setTimeout(() => setSuccess(false), 5000)
-    }, 1000)
-  }
-
   const contactInfo = [
     {
       icon: MapPin,
       title: 'Address',
       details: [
-        'NYSC Toru-Orua',
+        'Corp Members Lodge,',
+        'Staff Quarters,',
+        'Toru-Orua Community',
         'Sagbama Local Government Area',
         'Bayelsa State, Nigeria'
       ]
@@ -65,8 +45,8 @@ export default function Contact() {
       icon: Phone,
       title: 'Phone',
       details: [
-        '+234 803 123 4567',
-        '+234 806 789 0123'
+        '+234 705 068 2329',
+        '+234 806 141 0856'
       ]
     },
     {
@@ -217,7 +197,14 @@ export default function Contact() {
                   </Alert>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Use Formspree for sending email */}
+                <form
+                  action="https://formspree.io/f/mldlvnla" // Replace with your Formspree form ID for conqueststat@gmail.com
+                  method="POST"
+                  className="space-y-6"
+                  onSubmit={() => setSuccess(true)}
+                  target="_blank"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name</Label>
@@ -227,7 +214,7 @@ export default function Contact() {
                         type="text"
                         placeholder="Enter your full name"
                         value={formData.name}
-                        onChange={handleChange}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
                         required
                       />
                     </div>
@@ -239,7 +226,7 @@ export default function Contact() {
                         type="email"
                         placeholder="Enter your email"
                         value={formData.email}
-                        onChange={handleChange}
+                        onChange={e => setFormData({ ...formData, email: e.target.value })}
                         required
                       />
                     </div>
@@ -253,7 +240,7 @@ export default function Contact() {
                       type="text"
                       placeholder="What is this about?"
                       value={formData.subject}
-                      onChange={handleChange}
+                      onChange={e => setFormData({ ...formData, subject: e.target.value })}
                       required
                     />
                   </div>
@@ -265,7 +252,7 @@ export default function Contact() {
                       name="message"
                       placeholder="Tell us more about your inquiry..."
                       value={formData.message}
-                      onChange={handleChange}
+                      onChange={e => setFormData({ ...formData, message: e.target.value })}
                       className="min-h-[120px]"
                       required
                     />
@@ -274,19 +261,9 @@ export default function Contact() {
                   <Button
                     type="submit"
                     className="w-full bg-green-600 hover:bg-green-700"
-                    disabled={loading}
                   >
-                    {loading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Send Message
-                      </>
-                    )}
+                    <Send className="h-4 w-4 mr-2" />
+                    Send Message
                   </Button>
                 </form>
               </CardContent>
@@ -313,11 +290,16 @@ export default function Contact() {
             </CardHeader>
             <CardContent>
               <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <MapPin className="h-12 w-12 mx-auto mb-2" />
-                  <p>Interactive map would be integrated here</p>
-                  <p className="text-sm">Toru-Orua, Sagbama LGA, Bayelsa State</p>
-                </div>
+                <iframe
+                  title="University of Africa Toru Orua Map"
+                  src="https://www.google.com/maps?q=University+of+Africa+Toru+Orua,+Sagbama+Local+Govt,+Bayelsa+State,+Nigeria&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, borderRadius: '0.5rem', minHeight: '240px' }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
               </div>
             </CardContent>
           </Card>

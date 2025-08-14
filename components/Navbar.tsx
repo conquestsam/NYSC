@@ -206,31 +206,31 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link href="/activities/cds" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+              <Link href="/activities/cds" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                 CDS Activities
               </Link>
-              <Link href="/activities/other" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+              <Link href="/activities/other" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                 Other Activities
               </Link>
-              <Link href="/jobs" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+              <Link href="/jobs" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                 Jobs/Scholarships
               </Link>
-              <Link href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+              <Link href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                 About Us
               </Link>
               {user && (
-                <Link href="/gallery" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+                <Link href="/gallery" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                   Gallery
                 </Link>
               )}
-              <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+              <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                 Contact
               </Link>
-              <Link href="/donation" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+              <Link href="/donation" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                 Donation
               </Link>
               {user && (
-                <Link href="/finance" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+                <Link href="/finance" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                   Finance
                 </Link>
               )}
@@ -247,19 +247,22 @@ export default function Navbar() {
                       <p className="text-xs text-green-200">{profile?.email}</p>
                     </div>
                   </div>
-                  <Link href="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+                  <Link href="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                     Dashboard
                   </Link>
-                  <Link href="/elections" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+                  <Link href="/elections" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                     Elections
                   </Link>
                   {profile?.role === 'super_admin' && (
-                    <Link href="/admin" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700">
+                    <Link href="/admin" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                       Admin Panel
                     </Link>
                   )}
                   <button
-                    onClick={signOut}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      signOut();
+                    }}
                     className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700"
                   >
                     Sign Out
@@ -268,12 +271,12 @@ export default function Navbar() {
               ) : (
                 <div className="border-t border-green-700 pt-4 space-y-2">
                   <Link href="/auth/signin">
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-green-700">
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
                       Sign In
                     </Button>
                   </Link>
                   <Link href="/auth/signup">
-                    <Button size="sm" className="w-full bg-yellow-400 text-green-600 hover:bg-yellow-500">
+                    <Button size="sm" className="w-full bg-yellow-400 text-green-600 hover:bg-yellow-500" onClick={() => setIsMenuOpen(false)}>
                       Sign Up
                     </Button>
                   </Link>
