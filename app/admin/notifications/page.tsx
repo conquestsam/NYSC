@@ -215,7 +215,7 @@ export default function NotificationManagement() {
     return notificationTypes.find(t => t.value === type) || notificationTypes[0]
   }
 
-  const isExpired = (expiresAt: string | null) => {
+  const isExpired = (expiresAt: string | undefined) => {
     if (!expiresAt) return false
     return new Date(expiresAt) < new Date()
   }
