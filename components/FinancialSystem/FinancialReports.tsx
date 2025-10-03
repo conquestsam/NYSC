@@ -247,22 +247,36 @@ export default function FinancialReports() {
   }
 
   const downloadReport = async (reportId: string) => {
-    try {
-      // Increment download count
-      const { error } = await supabase
-        .from('financial_reports')
-        .update({ download_count: supabase.sql`download_count + 1` })
-        .eq('id', reportId)
+  try {
+    // Get current report to get the current download count
+    const { data: currentReport, error: fetchError } = await supabase
+      .from('financial_reports')
+      .select('download_count')
+      .eq('id', reportId)
+      .single()
 
-      if (error) throw error
+    if (fetchError) throw fetchError
 
-      // In a real implementation, you would download the file from Supabase Storage
-      toast.success('Report download started')
-    } catch (error) {
-      console.error('Error downloading report:', error)
-      toast.error('Failed to download report')
-    }
+    // Increment download count
+    const { error } = await supabase
+      .from('financial_reports')
+      .update({ 
+        download_count: (currentReport?.download_count || 0) + 1 
+      })
+      .eq('id', reportId)
+
+    if (error) throw error
+
+    // Refresh the reports list to show updated count
+    fetchReports()
+    
+    // In a real implementation, you would download the file from Supabase Storage
+    toast.success('Report download started')
+  } catch (error) {
+    console.error('Error downloading report:', error)
+    toast.error('Failed to download report')
   }
+}
 
   const resetReportForm = () => {
     setReportForm({
