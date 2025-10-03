@@ -13,7 +13,8 @@ import {
   GraduationCap,
   Briefcase,
   Users,
-  Award
+  Award,
+  MapPin
 } from 'lucide-react'
 import { supabase, Activity } from '@/lib/supabase'
 import { format } from 'date-fns'
@@ -192,7 +193,7 @@ export default function OtherActivities() {
                         >
                           <div className="flex items-center justify-center text-lg text-gray-200">
                             <Calendar className="h-5 w-5 mr-2" />
-                            <span>{format(new Date(activities[currentSlide].activity_date), 'MMMM dd, yyyy')}</span>
+                            <span>{format(new Date(activities[currentSlide].activity_date || ''), 'MMMM dd, yyyy')}</span>
                           </div>
                           
                           {/* Enhanced Activity Details */}
@@ -400,13 +401,13 @@ export default function OtherActivities() {
                         {activity.activity_date && (
                           <div className="flex items-center text-sm text-gray-500">
                             <Calendar className="h-4 w-4 mr-2" />
-                            <span>{format(new Date(activity.activity_date), 'MMM dd, yyyy')}</span>
+                            <span>{format(new Date(activity.activity_date || ''), 'MMM dd, yyyy')}</span>
                           </div>
                         )}
                         
                         <div className="flex items-center text-sm text-gray-500">
                           <Clock className="h-4 w-4 mr-2" />
-                          <span>Added: {format(new Date(activity.created_at), 'MMM dd, yyyy')}</span>
+                          <span>Added: {format(new Date(activity.created_at || ''), 'MMM dd, yyyy')}</span>
                         </div>
                       </div>
                     </CardContent>
