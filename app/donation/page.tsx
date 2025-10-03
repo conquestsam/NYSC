@@ -121,7 +121,7 @@ export default function Donation() {
             Support Our Community
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Your generous donations help us build a stronger community and support corps members in their service year
+            Your continuous dedication to help us build a stronger community and support corps members in their service year
           </p>
         </motion.div>
 
@@ -138,7 +138,7 @@ export default function Donation() {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <DollarSign className="h-5 w-5 mr-2 text-green-600" />
-                    Choose Donation Amount
+                    Choose CDS Contribution Amount
                   </CardTitle>
                   <CardDescription>
                     Select a predefined amount or enter a custom amount
@@ -243,7 +243,7 @@ export default function Donation() {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Mail className="h-5 w-5 mr-2 text-green-600" />
-                    Donor Information (Optional)
+                    Monthly CDS Contribution Deposit Remarks
                   </CardTitle>
                   <CardDescription>
                     Help us acknowledge your contribution and stay in touch
@@ -291,7 +291,7 @@ export default function Donation() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="message">Message (Optional)</Label>
+                      <Label htmlFor="message">Describe the payment purpose</Label>
                       <Textarea
                         id="message"
                         name="message"
@@ -303,7 +303,7 @@ export default function Donation() {
                     </div>
                     <Button className="w-full bg-green-600 hover:bg-green-700" type="submit">
                       <Phone className="h-4 w-4 mr-2" />
-                      Notify Us of Donation
+                      Notify Us of Your Contribution
                     </Button>
                   </form>
                 </CardContent>
@@ -326,7 +326,7 @@ export default function Donation() {
                     Your Impact
                   </CardTitle>
                   <CardDescription>
-                    See how your donation makes a difference
+                    See how your contribution makes a difference
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

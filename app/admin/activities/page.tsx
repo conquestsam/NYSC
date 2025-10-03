@@ -58,6 +58,15 @@ export default function ActivitiesManagement() {
     title: '',
     description: '',
     image_url: '',
+    image_urls: [] as string[],
+    location: '',
+    duration: '',
+    organizer: '',
+    contact_info: '',
+    requirements: '',
+    max_participants: '',
+    registration_deadline: '',
+    tags: [] as string[],
     activity_date: '',
     category: 'cds',
     status: 'upcoming',
@@ -185,9 +194,9 @@ export default function ActivitiesManagement() {
       setActivities(activities.map(activity => 
         activity.id === activityId ? { ...activity, is_active: !isActive } : activity
       ))
-      toast.success(`Activity ${!isActive ? 'activated' : 'deactivated'} successfully`)
+      toast.success('Activity status updated')
     } catch (error) {
-      console.error('Error updating activity status:', error)
+      console.error('Error toggling activity status:', error)
       toast.error('Failed to update activity status')
     }
   }
@@ -197,6 +206,15 @@ export default function ActivitiesManagement() {
       title: '',
       description: '',
       image_url: '',
+      image_urls: [],
+      location: '',
+      duration: '',
+      organizer: '',
+      contact_info: '',
+      requirements: '',
+      max_participants: '',
+      registration_deadline: '',
+      tags: [],
       activity_date: '',
       category: 'cds',
       status: 'upcoming',
@@ -210,12 +228,62 @@ export default function ActivitiesManagement() {
       title: activity.title,
       description: activity.description || '',
       image_url: activity.image_url || '',
+      image_urls: activity.image_urls || [],
+      location: activity.location || '',
+      duration: activity.duration || '',
+      organizer: activity.organizer || '',
+      contact_info: activity.contact_info || '',
+      requirements: activity.requirements || '',
+      max_participants: activity.max_participants !== undefined && activity.max_participants !== null ? String(activity.max_participants) : '',
+      registration_deadline: activity.registration_deadline || '',
+      tags: activity.tags || [],
       activity_date: activity.activity_date || '',
       category: activity.category,
       status: activity.status,
       is_active: activity.is_active
     })
     setIsEditDialogOpen(true)
+  }
+  // Additional Images state and handlers
+  const [newImageUrl, setNewImageUrl] = useState('')
+  const addImageUrl = () => {
+    if (newImageUrl.trim() !== '') {
+      setFormData({ ...formData, image_urls: [...formData.image_urls, newImageUrl.trim()] })
+      setNewImageUrl('')
+    }
+  }
+  const removeImageUrl = (index: number) => {
+    setFormData({
+      ...formData,
+      image_urls: formData.image_urls.filter((_, i) => i !== index)
+    })
+  }
+
+  // Tags state and handlers
+  const [newTag, setNewTag] = useState('')
+  const addTag = () => {
+    if (newTag.trim() !== '' && !formData.tags.includes(newTag.trim())) {
+      setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] })
+      setNewTag('')
+    }
+  }
+  const removeTag = (index: number) => {
+    setFormData({
+      ...formData,
+      tags: formData.tags.filter((_, i) => i !== index)
+    })
+  }
+
+  if (loading || loadingData) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
+      </div>
+    )
+  }
+
+  if (!user || profile?.role !== 'super_admin') {
+    return null
   }
 
   const getStatusInfo = (status: string) => {
@@ -262,7 +330,8 @@ export default function ActivitiesManagement() {
                   Add Activity
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[525px]">
+              <DialogContent className="w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-2xl px-2 sm:px-6 py-6 overflow-y-auto max-h-[90vh]">
+                {/* Responsive dialog content */}
                 <DialogHeader>
                   <DialogTitle>Create New Activity</DialogTitle>
                   <DialogDescription>
@@ -288,8 +357,10 @@ export default function ActivitiesManagement() {
                       placeholder="Enter activity description"
                     />
                   </div>
+                  
+                  {/* Main Image */}
                   <div className="space-y-2">
-                    <Label htmlFor="image_url">Image URL (Optional)</Label>
+                    <Label htmlFor="edit_image_url">Main Image URL (Optional)</Label>
                     <Input
                       id="image_url"
                       value={formData.image_url}
@@ -297,7 +368,151 @@ export default function ActivitiesManagement() {
                       placeholder="https://example.com/image.jpg"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  
+                  {/* Multiple Images */}
+                  <div className="space-y-2">
+                    <Label>Additional Images</Label>
+                    <div className="flex space-x-2">
+                      <Input
+                        value={newImageUrl}
+                        onChange={(e) => setNewImageUrl(e.target.value)}
+                        placeholder="https://example.com/image.jpg"
+                        className="flex-1"
+                      />
+                      <Button type="button" onClick={addImageUrl} size="sm">
+                        Add
+                      </Button>
+                    </div>
+                    {formData.image_urls.length > 0 && (
+                      <div className="space-y-2 max-h-32 overflow-y-auto">
+                        {formData.image_urls.map((url, index) => (
+                          <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+                            <span className="text-sm truncate flex-1">{url}</span>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => removeImageUrl(index)}
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Event Details */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="edit_location">Location (Optional)</Label>
+                      <Input
+                        id="edit_location"
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        placeholder="Event location"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="edit_duration">Duration (Optional)</Label>
+                      <Input
+                        id="edit_duration"
+                        value={formData.duration}
+                        onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                        placeholder="e.g., 2 hours, Full day"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="edit_organizer">Organizer (Optional)</Label>
+                      <Input
+                        id="edit_organizer"
+                        value={formData.organizer}
+                        onChange={(e) => setFormData({ ...formData, organizer: e.target.value })}
+                        placeholder="Event organizer"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="edit_contact_info">Contact Info (Optional)</Label>
+                      <Input
+                        id="edit_contact_info"
+                        value={formData.contact_info}
+                        onChange={(e) => setFormData({ ...formData, contact_info: e.target.value })}
+                        placeholder="Contact information"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="edit_requirements">Requirements (Optional)</Label>
+                    <Textarea
+                      id="edit_requirements"
+                      value={formData.requirements}
+                      onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
+                      placeholder="Any requirements or prerequisites for participation"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="edit_max_participants">Max Participants (Optional)</Label>
+                      <Input
+                        id="edit_max_participants"
+                        type="number"
+                        min="1"
+                        value={formData.max_participants}
+                        onChange={(e) => setFormData({ ...formData, max_participants: e.target.value })}
+                        placeholder="Maximum number of participants"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="edit_registration_deadline">Registration Deadline (Optional)</Label>
+                      <Input
+                        id="edit_registration_deadline"
+                        type="date"
+                        value={formData.registration_deadline}
+                        onChange={(e) => setFormData({ ...formData, registration_deadline: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Tags */}
+                  <div className="space-y-2">
+                    <Label>Tags</Label>
+                    <div className="flex space-x-2">
+                      <Input
+                        value={newTag}
+                        onChange={(e) => setNewTag(e.target.value)}
+                        placeholder="Add a tag"
+                        className="flex-1"
+                      />
+                      <Button type="button" onClick={addTag} size="sm">
+                        Add Tag
+                      </Button>
+                    </div>
+                    {formData.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {formData.tags.map((tag, index) => (
+                          <Badge key={index} variant="secondary" className="flex items-center space-x-1">
+                            <span>{tag}</span>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 w-4 p-0 hover:bg-transparent"
+                              onClick={() => removeTag(index)}
+                            >
+                              ×
+                            </Button>
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="category">Category</Label>
                       <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
@@ -347,11 +562,11 @@ export default function ActivitiesManagement() {
                     <Label htmlFor="is_active">Active</Label>
                   </div>
                 </div>
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+                  <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)} className="w-full sm:w-auto">
                     Cancel
                   </Button>
-                  <Button onClick={createActivity}>Create Activity</Button>
+                  <Button onClick={createActivity} className="w-full sm:w-auto">Create Activity</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -481,7 +696,7 @@ export default function ActivitiesManagement() {
 
         {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="sm:max-w-[525px]">
+          <DialogContent className="w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-2xl px-2 sm:px-6 py-6 overflow-y-auto max-h-[90vh]">
             <DialogHeader>
               <DialogTitle>Edit Activity</DialogTitle>
               <DialogDescription>
@@ -516,7 +731,7 @@ export default function ActivitiesManagement() {
                   placeholder="https://example.com/image.jpg"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="edit_category">Category</Label>
                   <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
@@ -566,11 +781,11 @@ export default function ActivitiesManagement() {
                 <Label htmlFor="edit_is_active">Active</Label>
               </div>
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+            <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+              <Button variant="outline" onClick={() => setIsEditDialogOpen(false)} className="w-full sm:w-auto">
                 Cancel
               </Button>
-              <Button onClick={updateActivity}>Update Activity</Button>
+              <Button onClick={updateActivity} className="w-full sm:w-auto">Update Activity</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

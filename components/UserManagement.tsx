@@ -237,7 +237,7 @@ export default function Navbar() {
                 Contact
               </Link>
               <Link href="/donation" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>
-                CDS Contribution
+                Donation
               </Link>
               {user && (
                 <Link href="/finance" className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-green-700" onClick={() => setIsMenuOpen(false)}>

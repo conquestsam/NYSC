@@ -1,18 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    optimizePackageImports: ['@supabase/supabase-js']
+  output: 'export',
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  images: {
-    domains: ['images.pexels.com', 'ijspmapsslaorufibuua.supabase.co'],
-  },
-  // Add webpack configuration to handle potential caching issues
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.cache = false;
-    }
-    return config;
-  },
-}
+  images: { unoptimized: true },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

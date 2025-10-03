@@ -63,13 +63,13 @@ export default function JobsScholarshipsManagement() {
   })
 
   useEffect(() => {
-    if (!loading && (!user || profile?.role !== 'super_admin')) {
+    if (!loading && (!user || !['admin', 'super_admin'].includes(profile?.role || ''))) {
       router.push('/dashboard')
     }
   }, [user, profile, loading, router])
 
   useEffect(() => {
-    if (profile?.role === 'super_admin') {
+    if (['admin', 'super_admin'].includes(profile?.role || '')) {
       fetchJobs()
     }
   }, [profile])
@@ -201,7 +201,7 @@ export default function JobsScholarshipsManagement() {
     return isScholarship ? 'scholarship' : 'job'
   }
 
-  const isExpired = (deadline: string | null | undefined) => {
+  const isExpired = (deadline: string | null) => {
     if (!deadline) return false
     return isAfter(new Date(), parseISO(deadline))
   }
@@ -214,7 +214,7 @@ export default function JobsScholarshipsManagement() {
     )
   }
 
-  if (!user || profile?.role !== 'super_admin') {
+  if (!user || !['admin', 'super_admin'].includes(profile?.role || '')) {
     return null
   }
 
@@ -334,9 +334,9 @@ export default function JobsScholarshipsManagement() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {jobs?.map((job) => {
+                  {jobs.map((job) => {
                     const jobType = getJobType(job)
-                    const expired = isExpired(job?.deadline)
+                    const expired = isExpired(job.deadline)
                     
                     return (
                       <TableRow key={job.id}>

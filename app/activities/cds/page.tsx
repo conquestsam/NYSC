@@ -243,6 +243,78 @@ export default function CDSActivities() {
                       </p>
                     )}
                     
+                    {/* Enhanced Activity Details */}
+                    <div className="space-y-2 mb-4">
+                      {activity.location && (
+                        <div className="flex items-center text-sm text-gray-500">
+                          <MapPin className="h-4 w-4 mr-2" />
+                          <span>{activity.location}</span>
+                        </div>
+                      )}
+                      
+                      {activity.duration && (
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Clock className="h-4 w-4 mr-2" />
+                          <span>{activity.duration}</span>
+                        </div>
+                      )}
+                      
+                      {activity.organizer && (
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Users className="h-4 w-4 mr-2" />
+                          <span>Organized by {activity.organizer}</span>
+                        </div>
+                      )}
+                      
+                      {activity.max_participants && (
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Users className="h-4 w-4 mr-2" />
+                          <span>Max {activity.max_participants} participants</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Tags */}
+                    {activity.tags && activity.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {activity.tags.slice(0, 3).map((tag, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                        {activity.tags.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{activity.tags.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Multiple Images Preview */}
+                    {activity.image_urls && activity.image_urls.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-sm text-gray-600 mb-2">
+                          {activity.image_urls.length} additional images
+                        </p>
+                        <div className="flex space-x-2 overflow-x-auto">
+                          {activity.image_urls.slice(0, 3).map((url, index) => (
+                            <div key={index} className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex-shrink-0">
+                              <img
+                                src={url}
+                                alt={`${activity.title} ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ))}
+                          {activity.image_urls.length > 3 && (
+                            <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                              <span className="text-xs text-gray-600">+{activity.image_urls.length - 3}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    
                     <div className="space-y-2 mt-auto">
                       {activity.activity_date && (
                         <div className="flex items-center text-sm text-gray-500">

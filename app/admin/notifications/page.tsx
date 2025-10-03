@@ -71,13 +71,13 @@ export default function NotificationManagement() {
   ]
 
   useEffect(() => {
-    if (!loading && (!user || profile?.role !== 'super_admin')) {
+    if (!loading && (!user || !['admin', 'super_admin'].includes(profile?.role || ''))) {
       router.push('/dashboard')
     }
   }, [user, profile, loading, router])
 
   useEffect(() => {
-    if (profile?.role === 'super_admin') {
+    if (['admin', 'super_admin'].includes(profile?.role || '')) {
       fetchNotifications()
     }
   }, [profile])
@@ -215,7 +215,7 @@ export default function NotificationManagement() {
     return notificationTypes.find(t => t.value === type) || notificationTypes[0]
   }
 
-  const isExpired = (expiresAt: string | null | undefined) => {
+  const isExpired = (expiresAt: string | null) => {
     if (!expiresAt) return false
     return new Date(expiresAt) < new Date()
   }
@@ -228,7 +228,7 @@ export default function NotificationManagement() {
     )
   }
 
-  if (!user || profile?.role !== 'super_admin') {
+  if (!user || !['admin', 'super_admin'].includes(profile?.role || '')) {
     return null
   }
 
@@ -349,9 +349,9 @@ export default function NotificationManagement() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {notifications?.map((notification) => {
+                  {notifications.map((notification) => {
                     const typeInfo = getTypeInfo(notification.type)
-                    const expired = isExpired(notification?.expires_at)
+                    const expired = isExpired(notification.expires_at)
                     
                     return (
                       <TableRow key={notification.id}>

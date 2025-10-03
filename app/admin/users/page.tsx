@@ -205,6 +205,7 @@ export default function UserManagement() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'super_admin': return 'bg-red-100 text-red-800'
+      case 'admin': return 'bg-orange-100 text-orange-800'
       case 'electoral_committee': return 'bg-purple-100 text-purple-800'
       case 'executive': return 'bg-blue-100 text-blue-800'
       case 'candidate': return 'bg-orange-100 text-orange-800'
@@ -215,6 +216,7 @@ export default function UserManagement() {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'super_admin': return <Crown className="h-3 w-3 mr-1" />
+      case 'admin': return <Shield className="h-3 w-3 mr-1" />
       case 'electoral_committee': return <Shield className="h-3 w-3 mr-1" />
       default: return null
     }

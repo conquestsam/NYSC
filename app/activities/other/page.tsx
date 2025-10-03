@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import dayjs from 'dayjs';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -17,7 +16,7 @@ import {
   Award
 } from 'lucide-react'
 import { supabase, Activity } from '@/lib/supabase'
-// import { format } from 'date-fns'
+import { format } from 'date-fns'
 
 export default function OtherActivities() {
   const [activities, setActivities] = useState<Activity[]>([])
@@ -189,10 +188,36 @@ export default function OtherActivities() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.8, delay: 0.6 }}
-                          className="flex items-center justify-center text-lg text-gray-200"
+                          className="space-y-2 text-center"
                         >
-                          <Calendar className="h-5 w-5 mr-2" />
-                          <span>{dayjs(activities[currentSlide]?.activity_date ).format('MMM, DD YYYY').toUpperCase()}</span>
+                          <div className="flex items-center justify-center text-lg text-gray-200">
+                            <Calendar className="h-5 w-5 mr-2" />
+                            <span>{format(new Date(activities[currentSlide].activity_date), 'MMMM dd, yyyy')}</span>
+                          </div>
+                          
+                          {/* Enhanced Activity Details */}
+                          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-300">
+                            {activities[currentSlide]?.location && (
+                              <div className="flex items-center">
+                                <MapPin className="h-4 w-4 mr-1" />
+                                <span>{activities[currentSlide].location}</span>
+                              </div>
+                            )}
+                            
+                            {activities[currentSlide]?.duration && (
+                              <div className="flex items-center">
+                                <Clock className="h-4 w-4 mr-1" />
+                                <span>{activities[currentSlide].duration}</span>
+                              </div>
+                            )}
+                            
+                            {activities[currentSlide]?.organizer && (
+                              <div className="flex items-center">
+                                <Users className="h-4 w-4 mr-1" />
+                                <span>{activities[currentSlide].organizer}</span>
+                              </div>
+                            )}
+                          </div>
                         </motion.div>
                       )}
                     </div>
@@ -299,17 +324,89 @@ export default function OtherActivities() {
                         </p>
                       )}
                       
+                      {/* Enhanced Activity Details */}
+                      <div className="space-y-2 mb-4">
+                        {activity.location && (
+                          <div className="flex items-center text-sm text-gray-500">
+                            <MapPin className="h-4 w-4 mr-2" />
+                            <span>{activity.location}</span>
+                          </div>
+                        )}
+                        
+                        {activity.duration && (
+                          <div className="flex items-center text-sm text-gray-500">
+                            <Clock className="h-4 w-4 mr-2" />
+                            <span>{activity.duration}</span>
+                          </div>
+                        )}
+                        
+                        {activity.organizer && (
+                          <div className="flex items-center text-sm text-gray-500">
+                            <Users className="h-4 w-4 mr-2" />
+                            <span>Organized by {activity.organizer}</span>
+                          </div>
+                        )}
+                        
+                        {activity.max_participants && (
+                          <div className="flex items-center text-sm text-gray-500">
+                            <Users className="h-4 w-4 mr-2" />
+                            <span>Max {activity.max_participants} participants</span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Tags */}
+                      {activity.tags && activity.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {activity.tags.slice(0, 3).map((tag, index) => (
+                            <Badge key={index} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                          {activity.tags.length > 3 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{activity.tags.length - 3} more
+                            </Badge>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* Multiple Images Preview */}
+                      {activity.image_urls && activity.image_urls.length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-sm text-gray-600 mb-2">
+                            {activity.image_urls.length} additional images
+                          </p>
+                          <div className="flex space-x-2 overflow-x-auto">
+                            {activity.image_urls.slice(0, 3).map((url, index) => (
+                              <div key={index} className="w-16 h-16 bg-gray-200 rounded overflow-hidden flex-shrink-0">
+                                <img
+                                  src={url}
+                                  alt={`${activity.title} ${index + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            ))}
+                            {activity.image_urls.length > 3 && (
+                              <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                <span className="text-xs text-gray-600">+{activity.image_urls.length - 3}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
                       <div className="space-y-2">
                         {activity.activity_date && (
                           <div className="flex items-center text-sm text-gray-500">
                             <Calendar className="h-4 w-4 mr-2" />
-                            <span>{dayjs(activity?.activity_date ).format('MMM, DD YYYY')}</span>
+                            <span>{format(new Date(activity.activity_date), 'MMM dd, yyyy')}</span>
                           </div>
                         )}
                         
                         <div className="flex items-center text-sm text-gray-500">
                           <Clock className="h-4 w-4 mr-2" />
-                          <span>Added: {activity.created_at ? dayjs(activity.created_at).format('MMM, DD YYYY') : 'not provided'}</span>
+                          <span>Added: {format(new Date(activity.created_at), 'MMM dd, yyyy')}</span>
                         </div>
                       </div>
                     </CardContent>

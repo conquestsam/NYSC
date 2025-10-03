@@ -67,13 +67,13 @@ export default function GalleryManagement() {
   ]
 
   useEffect(() => {
-    if (!loading && (!user || profile?.role !== 'super_admin')) {
+    if (!loading && (!user || !['admin', 'super_admin'].includes(profile?.role || ''))) {
       router.push('/dashboard')
     }
   }, [user, profile, loading, router])
 
   useEffect(() => {
-    if (profile?.role === 'super_admin') {
+    if (['admin', 'super_admin'].includes(profile?.role || '')) {
       fetchPhotos()
     }
   }, [profile])
@@ -210,7 +210,7 @@ export default function GalleryManagement() {
     )
   }
 
-  if (!user || profile?.role !== 'super_admin') {
+  if (!user || !['admin', 'super_admin'].includes(profile?.role || '')) {
     return null
   }
 

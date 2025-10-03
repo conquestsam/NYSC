@@ -57,13 +57,13 @@ export default function HeroSlidesManagement() {
   })
 
   useEffect(() => {
-    if (!loading && (!user || profile?.role !== 'super_admin')) {
+    if (!loading && (!user || !['admin', 'super_admin'].includes(profile?.role || ''))) {
       router.push('/dashboard')
     }
   }, [user, profile, loading, router])
 
   useEffect(() => {
-    if (profile?.role === 'super_admin') {
+    if (['admin', 'super_admin'].includes(profile?.role || '')) {
       fetchSlides()
     }
   }, [profile])
@@ -195,7 +195,7 @@ export default function HeroSlidesManagement() {
     )
   }
 
-  if (!user || profile?.role !== 'super_admin') {
+  if (!user || !['admin', 'super_admin'].includes(profile?.role || '')) {
     return null
   }
 

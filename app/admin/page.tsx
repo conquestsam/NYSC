@@ -40,13 +40,13 @@ export default function AdminPanel() {
   })
 
   useEffect(() => {
-    if (!loading && (!user || profile?.role !== 'super_admin')) {
+    if (!loading && (!user || !['admin', 'super_admin'].includes(profile?.role || ''))) {
       router.push('/dashboard')
     }
   }, [user, profile, loading, router])
 
   useEffect(() => {
-    if (profile?.role === 'super_admin') {
+    if (['admin', 'super_admin'].includes(profile?.role || '')) {
       fetchStats()
     }
   }, [profile])
@@ -90,82 +90,98 @@ export default function AdminPanel() {
     )
   }
 
-  if (!user || profile?.role !== 'super_admin') {
+  if (!user || !['admin', 'super_admin'].includes(profile?.role || '')) {
     return null
   }
 
-  const quickActions = [
+  // Filter quick actions based on role
+  const allQuickActions = [
     {
       title: 'User Management',
       description: 'Manage users, roles, and verification',
       icon: Users,
       href: '/admin/users',
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      superAdminOnly: true
     },
     {
       title: 'Hero Slides',
       description: 'Manage homepage hero slider',
       icon: Image,
       href: '/admin/hero-slides',
-      color: 'bg-purple-500'
+      color: 'bg-purple-500',
+      superAdminOnly: false
     },
     {
       title: 'Jobs & Scholarships',
       description: 'Manage job and scholarship listings',
       icon: Briefcase,
       href: '/admin/jobs',
-      color: 'bg-green-500'
+      color: 'bg-green-500',
+      superAdminOnly: false
     },
     {
       title: 'Activities',
       description: 'Manage CDS and other activities',
       icon: Calendar,
       href: '/admin/activities',
-      color: 'bg-orange-500'
+      color: 'bg-orange-500',
+      superAdminOnly: false
     },
     {
       title: 'About Us',
       description: 'Manage about us sections',
       icon: Info,
       href: '/admin/about',
-      color: 'bg-indigo-500'
+      color: 'bg-indigo-500',
+      superAdminOnly: false
     },
     {
       title: 'Photo Gallery',
       description: 'Manage photo gallery',
       icon: Camera,
       href: '/admin/gallery',
-      color: 'bg-pink-500'
+      color: 'bg-pink-500',
+      superAdminOnly: false
     },
     {
       title: 'Elections',
       description: 'Manage elections and candidates',
       icon: Vote,
       href: '/admin/elections',
-      color: 'bg-red-500'
+      color: 'bg-red-500',
+      superAdminOnly: true
     },
     {
       title: 'Notifications',
       description: 'Manage notifications and announcements',
       icon: Bell,
       href: '/admin/notifications',
-      color: 'bg-indigo-500'
+      color: 'bg-indigo-500',
+      superAdminOnly: false
     },
     {
       title: 'Financial Management',
       description: 'Manage revenue, expenditure, and financial reports',
       icon: DollarSign,
       href: '/admin/finance',
-      color: 'bg-emerald-500'
+      color: 'bg-emerald-500',
+      superAdminOnly: true
     },
     {
       title: 'Settings',
       description: 'System settings and configuration',
       icon: Settings,
       href: '/admin/settings',
-      color: 'bg-gray-500'
+      color: 'bg-gray-500',
+      superAdminOnly: true
     }
   ]
+
+  // Filter actions based on user role
+  const quickActions = allQuickActions.filter(action => 
+    !action.superAdminOnly || profile?.role === 'super_admin'
+  )
 
   const statsCards = [
     { title: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-blue-600' },

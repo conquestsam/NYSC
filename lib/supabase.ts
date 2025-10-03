@@ -28,7 +28,7 @@ export interface Profile {
   ppa?: string
   department?: string
   bio?: string
-  role: 'voter' | 'candidate' | 'executive' | 'electoral_committee' | 'super_admin'
+  role: 'voter' | 'candidate' | 'executive' | 'electoral_committee' | 'admin' | 'super_admin'
   is_graduated: boolean
   is_verified: boolean
   identity_verified: boolean
@@ -66,7 +66,15 @@ export interface Activity {
   title: string
   description?: string
   image_url?: string
-  images?: string[]
+  image_urls?: string[]
+  location?: string
+  duration?: string
+  organizer?: string
+  contact_info?: string
+  requirements?: string
+  max_participants?: number
+  registration_deadline?: string
+  tags?: string[]
   activity_date?: string
   category: string
   status: string
@@ -296,6 +304,32 @@ export interface FinancialReport {
   generated_by?: string
   download_count: number
   is_public: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface ActivityParticipant {
+  id: string
+  activity_id: string
+  user_id: string
+  registration_date: string
+  attendance_status: 'registered' | 'attended' | 'absent' | 'cancelled'
+  feedback?: string
+  rating?: number
+  created_at: string
+  updated_at: string
+}
+
+export interface ActivityFeedback {
+  id: string
+  activity_id: string
+  user_id: string
+  feedback_type: 'general' | 'suggestion' | 'complaint' | 'appreciation'
+  content: string
+  rating?: number
+  is_anonymous: boolean
+  is_approved: boolean
+  approved_by?: string
   created_at: string
   updated_at: string
 }
