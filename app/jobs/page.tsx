@@ -219,7 +219,7 @@ export default function JobsScholarships() {
           >
             {filteredJobs.map((job, index) => {
               const jobType = getJobType(job)
-              const expired = isExpired(job.deadline)
+              const expired = isExpired(job.deadline || null)
               
               return (
                 <motion.div
